@@ -1,0 +1,51 @@
+<!-- Parte 6-->
+
+{% extends "base.html" %}
+
+{% block title %}Nova Conversa - Flub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow">
+            <div class="card-header bg-black text-white text-center py-3">
+                <h4 class="mb-0">Nova Conversa</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label") }}
+                        {{ form.title(class="form-control", placeholder="Ex: Dúvidas sobre Python, Ajuda com código, etc.") }}
+                        {% if form.title.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.title.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-dark btn-lg") }}
+                        <a href="{{ url_for('minha_conta.minha_conta') }}" class="btn btn-outline-secondary">
+                            Voltar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-3 border-0 shadow-sm">
+            <div class="card-body">
+                <h5>Dicas para uma boa conversa:</h5>
+                <ul class="mb-0 text-muted">
+                    <li>Seja específico nas suas perguntas</li>
+                    <li>Use títulos descritivos para encontrar depois</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

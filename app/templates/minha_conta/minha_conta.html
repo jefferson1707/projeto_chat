@@ -1,0 +1,148 @@
+<!-- Parte 5-->
+
+{% extends "base.html" %}
+
+{% block title %}Minha Conta - Flub{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Minhas Conversas</h2>
+        
+        {% if conversas %}
+            <div class="list-group">
+                {% for conversa in conversas %}
+                    <a href="{{ url_for('minha_conta.ver_conversa', conversa_id=conversa.id) }}" 
+                       class="list-group-item list-group-item-action border-0 shadow-sm mb-2">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ conversa.title }}</h5>
+                            <small class="text-muted hora-conversa" data-utc="{{ conversa.created_at.isoformat() }}">
+                                {{ conversa.created_at.strftime('%d/%m/%Y %H:%M') }}
+                            </small>
+                        </div>
+                        <p class="mb-1 text-muted">Clique para continuar a conversa</p>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-light border-0 shadow">
+                <h4>Nenhuma conversa encontrada</h4>
+                <p>Comece uma nova conversa!</p>
+                <a href="{{ url_for('minha_conta.nova_conversa') }}" class="btn btn-dark">
+                    Nova Conversa
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card border-0 shadow">
+            <div class="card-header bg-black text-white py-3">
+                <h5 class="mb-0">Meu Perfil</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Usuário:</strong> {{ current_user.username }}</p>
+                <p><strong>Email:</strong> {{ current_user.email }}</p>
+                <p><strong>Membro desde:</strong> 
+                    <span class="hora-membro" data-utc="{{ current_user.created_at.isoformat() }}">
+                        {{ current_user.created_at.strftime('%d/%m/%Y') }}
+                    </span>
+                </p>
+                <p><strong>Total de conversas:</strong> {{ conversas|length }}</p>
+                
+                <div class="d-grid gap-2 mt-3">
+                    <a href="{{ url_for('minha_conta.nova_conversa') }}" class="btn btn-dark">
+                        Nova Conversa
+                    </a>
+                    <a href="{{ url_for('minha_conta.editar_perfil') }}" class="btn btn-outline-dark">
+                        Editar Perfil
+                    </a>
+                    <a href="{{ url_for('minha_conta.historico_conversas') }}" class="btn btn-outline-secondary">
+                        Histórico Completo
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3 border-0 shadow">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0">Ações Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('minha_conta.nova_conversa') }}" class="btn btn-outline-dark">
+                        Nova Conversa
+                    </a>
+                    <a href="{{ url_for('minha_conta.historico_conversas') }}" class="btn btn-outline-secondary">
+                        Ver Todas as Conversas
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3 border-0 shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Configurações</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('minha_conta.apagar_todas_conversas') }}" class="btn btn-outline-warning btn-sm">
+                        Apagar Todas as Conversas
+                    </a>
+                    <a href="{{ url_for('minha_conta.apagar_conta') }}" class="btn btn-outline-secondary btn-sm">
+                        Gerenciar Conta
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Função para converter UTC para horário local de Brasília
+    function convertUTCToBrasilia(utcString, incluirHora = true) {
+        try {
+            const utcDate = new Date(utcString);
+            // Ajusta para o fuso horário de Brasília (UTC-3)
+            const brasiliaOffset = -3 * 60; // -3 horas em minutos
+            const localDate = new Date(utcDate.getTime() + (brasiliaOffset * 60 * 1000));
+            
+            if (incluirHora) {
+                return localDate.toLocaleDateString('pt-BR') + ' ' + localDate.toLocaleTimeString('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } else {
+                return localDate.toLocaleDateString('pt-BR');
+            }
+        } catch (error) {
+            console.error('Erro ao converter horário:', error);
+            return incluirHora ? '--/--/---- --:--' : '--/--/----';
+        }
+    }
+
+    // Converte horários das conversas (data e hora)
+    const elementosHora = document.querySelectorAll('.hora-conversa');
+    elementosHora.forEach(element => {
+        const utcTimestamp = element.getAttribute('data-utc');
+        if (utcTimestamp) {
+            const brasiliaTime = convertUTCToBrasilia(utcTimestamp, true);
+            element.textContent = brasiliaTime;
+        }
+    });
+
+    // Converte data do membro (apenas data)
+    const elementosMembro = document.querySelectorAll('.hora-membro');
+    elementosMembro.forEach(element => {
+        const utcTimestamp = element.getAttribute('data-utc');
+        if (utcTimestamp) {
+            const brasiliaDate = convertUTCToBrasilia(utcTimestamp, false);
+            element.textContent = brasiliaDate;
+        }
+    });
+});
+</script>
+{% endblock %}

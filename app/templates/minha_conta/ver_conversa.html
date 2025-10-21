@@ -1,0 +1,228 @@
+<!-- Parte 7 -->
+
+{% extends "base.html" %}
+
+{% block title %}{{ conversa.title }} - Flub{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>{{ conversa.title }}</h2>
+            <div>
+                <a href="{{ url_for('minha_conta.minha_conta') }}" class="btn btn-outline-secondary">
+                    Voltar
+                </a>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                {% if mensagens %}
+                    <div class="chat-messages" style="max-height: 500px; overflow-y: auto;">
+                        {% for mensagem in mensagens %}
+                            <div class="chat-message {% if mensagem.role == 'user' %}user-message{% else %}assistant-message{% endif %}" 
+                                 data-message-id="{{ mensagem.id }}"
+                                 data-role="{{ mensagem.role }}"
+                                 id="message-{{ mensagem.id }}">
+                                <div class="d-flex align-items-center mb-1">
+                                    <strong>
+                                        {% if mensagem.role == 'user' %}
+                                            Você
+                                        {% else %}
+                                            Flub
+                                        {% endif %}
+                                    </strong>
+                                    <small class="text-muted ms-2 hora-local" data-utc="{{ mensagem.timestamp.isoformat() }}">
+                                        {{ mensagem.timestamp.strftime('%H:%M') }}
+                                    </small>
+                                </div>
+                                <div class="message-content">
+                                    {% if mensagem.role == 'user' %}
+                                        {{ mensagem.content|replace('\n', '<br>')|safe }}
+                                    {% else %}
+                                        {% if loop.last and not session.get('message_' ~ mensagem.id ~ '_typed') %}
+                                            <!-- Última mensagem do Gemini - efeito de digitação (se ainda não foi digitada) -->
+                                            <div class="typewriter-container">
+                                                <span class="typewriter-text" data-full-content="{{ mensagem.content|escape }}"></span>
+                                                <span class="typewriter-cursor">|</span>
+                                            </div>
+                                        {% else %}
+                                            <!-- Mensagens do Gemini já digitadas ou antigas - texto completo -->
+                                            {{ mensagem.content|replace('\n', '<br>')|safe }}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted">Nenhuma mensagem nesta conversa ainda.</p>
+                    </div>
+                {% endif %}
+                
+                <form method="POST" action="{{ url_for('minha_conta.enviar_mensagem', conversa_id=conversa.id) }}" class="mt-3">
+                    <div class="input-group">
+                        <input type="text" name="content" class="form-control" placeholder="Digite sua mensagem..." required>
+                        <button type="submit" class="btn btn-dark">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Função para converter UTC para horário local de Brasília
+    function convertUTCToBrasilia(utcString) {
+        try {
+            const utcDate = new Date(utcString);
+            // Ajusta para o fuso horário de Brasília (UTC-3)
+            const brasiliaOffset = -3 * 60; // -3 horas em minutos
+            const localDate = new Date(utcDate.getTime() + (brasiliaOffset * 60 * 1000));
+            
+            return localDate.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        } catch (error) {
+            console.error('Erro ao converter horário:', error);
+            return '--:--';
+        }
+    }
+
+    // Converte todos os horários UTC para horário de Brasília
+    const elementosHora = document.querySelectorAll('.hora-local');
+    elementosHora.forEach(element => {
+        const utcTimestamp = element.getAttribute('data-utc');
+        if (utcTimestamp) {
+            const brasiliaTime = convertUTCToBrasilia(utcTimestamp);
+            element.textContent = brasiliaTime;
+        }
+    });
+
+    // Efeito de digitação apenas para a última mensagem do Gemini que ainda não foi digitada
+    function typeWriter(element, text, messageId, speed = 30) {
+        return new Promise((resolve) => {
+            let i = 0;
+            const cursor = element.parentElement.querySelector('.typewriter-cursor');
+            
+            function type() {
+                if (i < text.length) {
+                    // Adiciona caracteres um por um
+                    if (text.charAt(i) === '\n') {
+                        element.innerHTML += '<br>';
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                    }
+                    i++;
+                    
+                    // Scroll automático durante a digitação
+                    const chatContainer = document.querySelector('.chat-messages');
+                    if (chatContainer) {
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }
+                    
+                    // Velocidade variável para parecer mais natural
+                    const currentSpeed = getRandomSpeed(speed);
+                    setTimeout(type, currentSpeed);
+                } else {
+                    // Remove cursor quando termina
+                    if (cursor) {
+                        cursor.style.display = 'none';
+                    }
+                    
+                    // Marca a mensagem como já digitada no sessionStorage
+                    sessionStorage.setItem(`message_${messageId}_typed`, 'true');
+                    
+                    resolve();
+                }
+            }
+            
+            type();
+        });
+    }
+
+    // Velocidade aleatória para parecer mais humano
+    function getRandomSpeed(baseSpeed) {
+        return baseSpeed + Math.random() * 20 - 10; // Varia ±10ms
+    }
+
+    // Verifica se uma mensagem já foi digitada
+    function isMessageAlreadyTyped(messageId) {
+        return sessionStorage.getItem(`message_${messageId}_typed`) === 'true';
+    }
+
+    // Inicia o efeito de digitação apenas para a última mensagem do Gemini que não foi digitada
+    function startTypewriterEffect() {
+        const lastGeminiMessage = document.querySelector('.assistant-message:last-child');
+        
+        if (lastGeminiMessage) {
+            const messageId = lastGeminiMessage.getAttribute('data-message-id');
+            const typewriterText = lastGeminiMessage.querySelector('.typewriter-text');
+            const fullContent = typewriterText?.getAttribute('data-full-content');
+            
+            // Verifica se a mensagem já foi digitada anteriormente
+            if (typewriterText && fullContent && !isMessageAlreadyTyped(messageId)) {
+                // Pequeno delay para dar tempo da página carregar
+                setTimeout(() => {
+                    typeWriter(typewriterText, fullContent, messageId, 25);
+                }, 500);
+            } else if (typewriterText && fullContent && isMessageAlreadyTyped(messageId)) {
+                // Se já foi digitada, mostra o texto completo e remove o container de digitação
+                typewriterText.innerHTML = fullContent.replace(/\n/g, '<br>');
+                const cursor = typewriterText.parentElement.querySelector('.typewriter-cursor');
+                if (cursor) {
+                    cursor.style.display = 'none';
+                }
+            }
+        }
+    }
+
+    // Scroll automático para o final do chat
+    const chatContainer = document.querySelector('.chat-messages');
+    if (chatContainer) {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Inicia o efeito de digitação apenas na última mensagem não digitada
+    startTypewriterEffect();
+});
+</script>
+
+<style>
+.typewriter-container {
+    min-height: 1.2em;
+    position: relative;
+}
+
+.typewriter-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.typewriter-cursor {
+    animation: blink 1s infinite;
+    color: #666;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.assistant-message {
+    position: relative;
+}
+
+/* Melhora a legibilidade durante a digitação */
+.assistant-message .message-content {
+    line-height: 1.5;
+}
+</style>
+{% endblock %}

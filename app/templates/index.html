@@ -1,0 +1,64 @@
+<!-- Parte 2-->
+
+{% extends "base.html" %}
+
+{% block title %}Início - Flub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4 fw-bold">Bem-vindo ao Flub</h1>
+        <p class="lead mb-4 text-muted">Converse com inteligência artificial em tempo real.</p>
+        
+        {% if current_user.is_authenticated %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ url_for('minha_conta.minha_conta') }}" class="btn btn-dark btn-lg me-md-2">
+                    Minhas Conversas
+                </a>
+                <a href="{{ url_for('minha_conta.nova_conversa') }}" class="btn btn-outline-dark btn-lg">
+                    Nova Conversa
+                </a>
+            </div>
+        {% else %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-dark btn-lg me-md-2">
+                    Fazer Login
+                </a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-outline-dark btn-lg">
+                    Criar Conta
+                </a>
+            </div>
+            
+            <div class="mt-5">
+                <h3 class="mb-4">Recursos</h3>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="text-dark">Chat Inteligente</h5>
+                                <p class="text-muted">Converse com IA de última geração</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="text-dark">Histórico Salvo</h5>
+                                <p class="text-muted">Todas as suas conversas ficam salvas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="text-dark">Privacidade</h5>
+                                <p class="text-muted">Suas conversas são armazenadas com segurança</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

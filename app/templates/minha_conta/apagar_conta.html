@@ -1,0 +1,93 @@
+<!-- Parte 11 -->
+
+{% extends "base.html" %}
+
+{% block title %}Apagar Conta - Flub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white text-center py-3">
+                <h4 class="mb-0">Apagar Conta Permanentemente</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <h5>Atenção: Ação Irreversível</h5>
+                    <p class="mb-0">Esta ação <strong>apagará permanentemente</strong> sua conta e todos os dados associados:</p>
+                    <ul class="mt-2 mb-0">
+                        <li>Todas as suas conversas ({{ current_user.conversations.count() }} conversas)</li>
+                        <li>Todas as mensagens trocadas</li>
+                        <li>Seu perfil de usuário ({{ current_user.username }})</li>
+                        <li>Seu email ({{ current_user.email }})</li>
+                        <li>Seu histórico completo</li>
+                    </ul>
+                </div>
+
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="confirmacao" class="form-label">
+                            <strong>Para confirmar, digite <code>APAGAR_CONTA</code> abaixo:</strong>
+                        </label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="confirmacao" 
+                               name="confirmacao" 
+                               placeholder="Digite APAGAR_CONTA aqui"
+                               required>
+                        <div class="form-text text-danger">
+                            Esta ação é permanente e não pode ser desfeita!
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger btn-lg" 
+                                onclick="return confirm('Atenção: Você está prestes a apagar permanentemente sua conta. Suas {{ current_user.conversations.count() }} conversas serão perdidas. Tem certeza?')">
+                            Apagar Minha Conta Permanentemente
+                        </button>
+                        <a href="{{ url_for('minha_conta.minha_conta') }}" class="btn btn-outline-secondary">
+                            Cancelar e Voltar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-3 border-0 shadow-sm">
+            <div class="card-body">
+                <h5>Resumo da sua conta:</h5>
+                <ul class="mb-0">
+                    <li><strong>Usuário:</strong> {{ current_user.username }}</li>
+                    <li><strong>Email:</strong> {{ current_user.email }}</li>
+                    <li><strong>Membro desde:</strong> {{ current_user.created_at.strftime('%d/%m/%Y') }}</li>
+                    <li><strong>Total de conversas:</strong> {{ current_user.conversations.count() }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmInput = document.getElementById('confirmacao');
+    const submitButton = document.querySelector('button[type="submit"]');
+    
+    function updateButtonState() {
+        if (confirmInput.value === 'APAGAR_CONTA') {
+            submitButton.disabled = false;
+            submitButton.classList.remove('btn-secondary');
+            submitButton.classList.add('btn-danger');
+        } else {
+            submitButton.disabled = true;
+            submitButton.classList.remove('btn-danger');
+            submitButton.classList.add('btn-secondary');
+        }
+    }
+    
+    confirmInput.addEventListener('input', updateButtonState);
+    updateButtonState();
+});
+</script>
+{% endblock %}

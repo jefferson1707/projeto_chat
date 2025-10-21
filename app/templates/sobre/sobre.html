@@ -1,0 +1,109 @@
+<!-- Parte 13-->
+
+{% extends "base.html" %}
+
+{% block title %}Sobre - Flub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold mb-3">Sobre o Flub</h1>
+            <p class="lead text-muted">Conectando você com inteligência artificial de forma simples e eficiente</p>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <h5 class="text-dark">Nossa Missão</h5>
+                        <p class="text-muted">Democratizar o acesso à inteligência artificial, tornando-a acessível e útil para todos os usuários.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <h5 class="text-dark">Nossa Visão</h5>
+                        <p class="text-muted">Ser a plataforma de referência em conversação com IA, oferecendo experiências únicas e personalizadas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow mb-5">
+            <div class="card-header bg-black text-white text-center py-3">
+                <h4 class="mb-0">Recursos Principais</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h6>Chat Inteligente</h6>
+                        <p class="text-muted small">Converse com IA de última geração em tempo real</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h6>Histórico Salvo</h6>
+                        <p class="text-muted small">Todas as suas conversas são armazenadas com segurança</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h6>Interface Limpa</h6>
+                        <p class="text-muted small">Design moderno e minimalista para melhor experiência</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h6>Privacidade</h6>
+                        <p class="text-muted small">Seus dados são protegidos e criptografados</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h6>Multiplataforma</h6>
+                        <p class="text-muted small">Acesse de qualquer dispositivo com internet</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h6>Suporte</h6>
+                        <p class="text-muted small">Equipe dedicada para ajudar quando precisar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow">
+            <div class="card-header bg-white text-center py-3">
+                <h4 class="mb-0">Equipe</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="row text-center">
+                    <div class="col-md-4 mb-4">
+                        <div class="bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="text-muted">FL</span>
+                        </div>
+                        <h6 class="mt-3 mb-1">Fundador</h6>
+                        <p class="text-muted small">Desenvolvedor Full Stack</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="text-muted">AI</span>
+                        </div>
+                        <h6 class="mt-3 mb-1">IA Specialist</h6>
+                        <p class="text-muted small">Especialista em Inteligência Artificial</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="text-muted">UX</span>
+                        </div>
+                        <h6 class="mt-3 mb-1">UX Designer</h6>
+                        <p class="text-muted small">Designer de Experiência do Usuário</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('sobre.contato') }}" class="btn btn-dark me-2">
+                Entre em Contato
+            </a>
+            <a href="{{ url_for('home.index') }}" class="btn btn-outline-secondary">
+                Voltar para Início
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

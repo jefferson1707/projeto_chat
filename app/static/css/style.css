@@ -1,0 +1,266 @@
+/* Flub - Modern Black & White Theme */
+
+:root {
+    --primary-black: #000000;
+    --secondary-white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+}
+
+/* Base Styles */
+body {
+    background-color: var(--secondary-white);
+    color: var(--gray-900);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-size: 1.8rem;
+    letter-spacing: -0.5px;
+    font-weight: 800;
+}
+
+.navbar-dark.bg-black {
+    background-color: var(--primary-black) !important;
+    border-bottom: 1px solid var(--gray-300);
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.btn-dark {
+    background-color: var(--primary-black);
+    border-color: var(--primary-black);
+}
+
+.btn-dark:hover {
+    background-color: var(--gray-800);
+    border-color: var(--gray-800);
+    transform: translateY(-1px);
+}
+
+.btn-outline-dark {
+    color: var(--primary-black);
+    border-color: var(--primary-black);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--primary-black);
+    border-color: var(--primary-black);
+    color: var(--secondary-white);
+    transform: translateY(-1px);
+}
+
+/* Forms */
+.form-control {
+    border-radius: 8px;
+    border: 2px solid var(--gray-300);
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-black);
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+}
+
+/* Chat Styles */
+.chat-messages {
+    padding: 1rem;
+}
+
+.user-message {
+    background-color: var(--primary-black);
+    color: var(--secondary-white);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    max-width: 80%;
+    margin-left: auto;
+}
+
+.assistant-message {
+    background-color: var(--gray-100);
+    color: var(--gray-900);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    max-width: 80%;
+    margin-right: auto;
+}
+
+/* List Groups */
+.list-group-item {
+    border-radius: 8px !important;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--gray-300);
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: var(--gray-100);
+    transform: translateX(2px);
+}
+
+/* Shadows */
+.shadow {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+/* Text Colors */
+.text-muted {
+    color: var(--gray-600) !important;
+}
+
+.text-dark {
+    color: var(--gray-900) !important;
+}
+
+/* Badges */
+.badge {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .user-message,
+    .assistant-message {
+        max-width: 95%;
+    }
+}
+
+/* Loading States */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Focus States */
+.btn:focus,
+.form-control:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Utility Classes */
+.bg-black {
+    background-color: var(--primary-black) !important;
+}
+
+.text-black {
+    color: var(--primary-black) !important;
+}
+
+.border-black {
+    border-color: var(--primary-black) !important;
+}
+
+/* Hover Effects */
+.nav-link {
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: var(--gray-300) !important;
+}
+
+/* Code Blocks */
+code {
+    background-color: var(--gray-100);
+    color: var(--primary-black);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875em;
+}
+
+/* Adicione estas regras ao seu CSS existente */
+
+.typewriter-container {
+    min-height: 1.2em;
+    position: relative;
+}
+
+.typewriter-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+.typewriter-cursor {
+    animation: blink 1s infinite;
+    color: #666;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.assistant-message {
+    position: relative;
+}
+
+/* Garante que o container tenha altura mínima durante a digitação */
+.assistant-message .message-content {
+    min-height: 20px;
+}

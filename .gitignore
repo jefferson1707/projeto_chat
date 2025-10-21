@@ -1,0 +1,9 @@
+# .gitignore
+
+.env
+__pycache__/
+*.pyc
+*.db
+instance/
+generate_secret.py
+test_app.py
