@@ -31,4 +31,4 @@ jobs:
       # 4️⃣ Executa os testes
       - name: Rodar testes automáticos
         run: |
-          pytest -v || echo "⚠️ Nenhum teste encontrado ou erro em testes"
+          pytest -v 
