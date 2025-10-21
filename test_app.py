@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import os
 import sys
 from app import create_app, db
