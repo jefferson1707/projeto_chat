@@ -10,6 +10,8 @@ from flask_sqlalchemy import \
     SQLAlchemy  # ORM - para trabalhar com banco de dados usando Python
 from flask_bcrypt import \
     Bcrypt  # Criptografia de senha
+from flask_cors import \
+      CORS # Permite que o front-end acesse o back-end em todos os navegadores
 
 
 # Step 1: cria as instancias
@@ -21,8 +23,9 @@ bcrypt = Bcrypt()   # para criptografia
 # step 2: cria o app
 def create_app():
 
-    # Step 2.1: aqui criamos a instancia do flask
+    # Step 2.1: aqui criamos a instancia do flask e atribuimos ao cors
     app = Flask(__name__)
+    CORS(app)
 
     # Step 2.2: pegados do arquivo .env
     app.config.from_object(Config) # Espera uma class do config.py
