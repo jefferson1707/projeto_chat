@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: 🧩 Mostrar versão do Docker
+        run: docker --version
+
       - name: 📦 Checkout do código
         uses: actions/checkout@v4
 
@@ -19,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: 🏗️ Build da imagem Docker
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/projeto_chat:latest .
+        run: docker build -t jefferson1707/projeto_chat:latest .
 
       - name: 🚀 Push da imagem para o Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/projeto_chat:latest
+        run: docker push jefferson1707/projeto_chat:latest
