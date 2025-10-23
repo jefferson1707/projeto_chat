@@ -1,4 +1,4 @@
-# teste
+# teste:
 
 import os
 import sys
