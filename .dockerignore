@@ -1,3 +1,5 @@
+# arquivos ignorados no docker
+
 __pycache__/
 instance/
 *.pyc

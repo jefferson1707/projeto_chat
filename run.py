@@ -1,12 +1,23 @@
 # parte 6: esta parte foi deixada para a parte 4, para podermmpos testar ao decorrer do desenvolvimento
 
 # Vamos importar o app
-from app import create_app
+from app import create_app, db
+import os
 
 # step 1: cria aplicação flask
 app = create_app()
 
-# step 2: roda o app
+# Step 2: cria o banco de dados para o docker 
+with app.app_context():
+    db.create_all()
+
+# step 3: roda o app
 if __name__ == "__main__":
-    # executando aplicação em modo desenvolvimento
-    app.run(debug=True)
+
+    # Step 3.1: desenvolvimento: debug ativado
+    # debug desativado (usar variável de ambiente)
+    debug_mode = os.getenv('DEBUG', 'False').lower() == 'true'
+
+    # step 3.2: executando aplicação em modo desenvolvimento, debug ativado,
+    #  host 0.0.0.0 e porta 5000 para sincronizar com o docker
+    app.run(host='0.0.0.0', port=5000, debug=True)
