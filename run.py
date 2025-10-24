@@ -18,6 +18,9 @@ if __name__ == "__main__":
     # debug desativado (usar variável de ambiente)
     debug_mode = os.getenv('DEBUG', 'False').lower() == 'true'
 
-    # step 3.2: executando aplicação em modo desenvolvimento, debug ativado,
+    # Step 3.2: define porta de execução dinâmica (Render define PORT)
+    port = int(os.environ.get("PORT", 5000))
+
+    # step 3.3: executando aplicação em modo desenvolvimento, debug ativado,
     #  host 0.0.0.0 e porta 5000 para sincronizar com o docker
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)
