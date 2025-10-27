@@ -52,6 +52,6 @@ resource "render_web_service" "projeto_chat" {
   start_command = "python run.py"
 
   # Configurações opcionais
-  health_check_path = "/health"  # Se tiver uma rota de health check
+  health_check_path = "/"  
   num_instances     = 1
 }
