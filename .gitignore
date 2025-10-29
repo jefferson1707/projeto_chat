@@ -6,5 +6,20 @@ __pycache__/
 *.db
 instance/
 generate_secret.py
+
+# Docker
 .env.docker
+
+# Terraform
 *.tfvars
+*.tfstate
+# ANSIBLE - Arquivos temporários e sensíveis
+
+*.retry
+*.tmp
+.ansible_collections/
+ansible.log
+
+# VIRTUALENV
+
+venv/
