@@ -1,0 +1,85 @@
+---
+- name: 📁 Criar diretório instance
+  file:
+    path: "{{ project_path }}/instance"
+    state: directory
+    mode: '0755'
+
+- name: �� Criar arquivo .env a partir do exemplo
+  copy:
+    src: "{{ project_path }}/.env.example"
+    dest: "{{ project_path }}/.env"
+    remote_src: yes
+  when: not lookup('file', project_path + '/.env') | length > 0
+  ignore_errors: yes
+
+- name: 🔑 Gerar secret key segura
+  shell: |
+    python3 -c "import secrets; print(secrets.token_hex(32))"
+  register: secret_key
+  changed_when: false
+
+- name: ✏️ Atualizar SECRET_KEY no .env
+  lineinfile:
+    path: "{{ project_path }}/.env"
+    regexp: '^SECRET_KEY='
+    line: "SECRET_KEY={{ secret_key.stdout }}"
+  when: not lookup('file', project_path + '/.env') | length > 0
+
+- name: 🗃️ Configurar variáveis de ambiente para Flask
+  lineinfile:
+    path: "{{ project_path }}/.env"
+    regexp: '^{{ item.key }}='
+    line: "{{ item.key }}={{ item.value }}"
+  with_items:
+    - { key: 'FLASK_APP', value: 'run.py' }
+    - { key: 'FLASK_ENV', value: 'development' }
+    - { key: 'DATABASE_URL', value: 'sqlite:///app.db' }
+    - { key: 'SQLALCHEMY_DATABASE_URI', value: 'sqlite:///app.db' }
+    - { key: 'DEBUG', value: 'True' }
+
+- name: 🔄 Inicializar sistema de migrações
+  command:
+    cmd: "{{ venv_path }}/bin/flask db init"
+    chdir: "{{ project_path }}"
+  environment:
+    FLASK_APP: "run.py"
+  ignore_errors: yes
+
+- name: 🗄️ Criar migração inicial
+  command:
+    cmd: "{{ venv_path }}/bin/flask db migrate -m 'Initial migration'"
+    chdir: "{{ project_path }}"
+  environment:
+    FLASK_APP: "run.py"
+  ignore_errors: yes
+
+- name: ⬆️ Aplicar migrações
+  command:
+    cmd: "{{ venv_path }}/bin/flask db upgrade"
+    chdir: "{{ project_path }}"
+  environment:
+    FLASK_APP: "run.py"
+  ignore_errors: yes
+
+- name: 🧪 Verificar se aplicação inicia
+  command:
+    cmd: "{{ venv_path }}/bin/python -c 'from run import app; print(\"✅ App importado com sucesso\")'"
+    chdir: "{{ project_path }}"
+  register: app_test
+  changed_when: false
+
+- name: 📊 Mostrar resultado do teste
+  debug:
+    msg: "{{ app_test.stdout }}"
+
+- name: 🔍 Verificar arquivos criados
+  find:
+    paths: "{{ project_path }}"
+    patterns: "*.db"
+    file_type: file
+  register: db_files
+
+- name: 📊 Mostrar arquivos de banco
+  debug:
+    msg: "Arquivos de banco encontrados: {{ db_files.files | map(attribute='path') | list }}"

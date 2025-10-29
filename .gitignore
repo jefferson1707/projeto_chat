@@ -13,6 +13,7 @@ generate_secret.py
 # Terraform
 *.tfvars
 *.tfstate
+
 # ANSIBLE - Arquivos temporários e sensíveis
 
 *.retry

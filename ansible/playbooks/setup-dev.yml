@@ -1,0 +1,38 @@
+---
+- name: 🐍 Configurar ambiente de desenvolvimento Flask
+  hosts: localhost
+  connection: local
+  vars:
+    project_path: "{{ ansible_env.HOME }}/projeto_chat"
+    venv_path: "{{ project_path }}/venv"
+    
+  roles:
+    - common
+    - python
+    - project-setup
+
+- name: ✅ Verificar instalação
+  hosts: localhost
+  connection: local
+  vars:  # ← ADICIONE ESTA SEÇÃO
+    project_path: "{{ ansible_env.HOME }}/projeto_chat"
+    venv_path: "{{ project_path }}/venv"
+    
+  tasks:
+    - name: Testar Flask
+      command: "{{ venv_path }}/bin/flask --version"
+      register: flask_version
+      changed_when: false
+      
+    - name: Mostrar versão do Flask
+      debug:
+        msg: "{{ flask_version.stdout }}"
+        
+    - name: Verificar se virtualenv foi criado
+      stat:
+        path: "{{ venv_path }}/bin/activate"
+      register: venv_check
+      
+    - name: Mostrar status do virtualenv
+      debug:
+        msg: "Virtualenv criado: {{ venv_check.stat.exists }}"

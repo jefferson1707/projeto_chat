@@ -1,0 +1,29 @@
+---
+- name: 🔍 Verificar se Python 3 está disponível
+  command: python3 --version
+  register: python_check
+  changed_when: false
+  ignore_errors: yes
+
+- name: ❌ Python 3 não encontrado - instalar dependências
+  block:
+    - name: 🔄 Atualizar cache de pacotes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: yes
+
+    - name: 📦 Instalar Python e dependências básicas
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+          - sqlite3
+        state: present
+      become: yes
+  when: python_check.rc != 0
+  rescue:
+    - name: ⚠️ Falha na instalação do Python
+      debug:
+        msg: "Falha ao instalar Python. Instale manualmente: sudo apt install python3 python3-pip python3-venv"
