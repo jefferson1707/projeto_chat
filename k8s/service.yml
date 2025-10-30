@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: projeto-chat-service
+  labels:
+    app: projeto-chat
+spec:
+  selector:
+    app: projeto-chat
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+  type: LoadBalancer

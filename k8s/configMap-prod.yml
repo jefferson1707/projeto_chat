@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: projeto-chat-config-prod
+data:
+  flask_env: "production"
+  debug: "false"
+  database_uri: "sqlite:////app/instance/chat.db"

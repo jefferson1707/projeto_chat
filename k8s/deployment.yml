@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projeto-chat
+  labels:
+    app: projeto-chat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: projeto-chat
+  template:
+    metadata:
+      labels:
+        app: projeto-chat
+    spec:
+      containers:
+      - name: app
+        image: jefferson1707/projeto_chat:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PORT
+          value: "5000"
+        - name: FLASK_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: SQLALCHEMY_DATABASE_URI
+          value: "sqlite:////app/instance/chat.db"
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: projeto-chat-secrets
+              key: secret-key
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: projeto-chat-secrets
+              key: gemini-api-key
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: data-storage
+          mountPath: /app/instance
+      volumes:
+      - name: data-storage
+        emptyDir: {}
