@@ -1,32 +1,33 @@
-# 1️⃣ Imagem base
 FROM python:3.11-slim
 
-# 2️⃣ Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# 3️⃣ Copia o requirements primeiro (para melhor cache)
-COPY requirements.txt .
-
-# 4️⃣ Instala dependências do sistema e Python
-RUN apt-get update && apt-get install -y build-essential curl \
-    && pip install --upgrade pip \
-    && pip install -r requirements.txt \
-    && apt-get remove -y build-essential curl \
-    && apt-get autoremove -y \
+# Instala dependências do sistema
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 5️⃣ Copia o resto da aplicação
+# Copia requirements primeiro para cache
+COPY requirements.txt .
+
+# Instala dependências Python
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copia a aplicação
 COPY . .
 
-# 6️⃣ Cria diretório 'instance' (se necessário)
+# Cria diretório instance
 RUN mkdir -p instance
 
-# 7️⃣ Define variáveis de ambiente do Flask
-ENV FLASK_APP=run.py
-ENV FLASK_ENV=production
+# Porta que o Render usa
+ENV PORT=10000
+EXPOSE 10000
 
-# 8️⃣ Expõe a porta que o Flask vai usar
-EXPOSE 5000
+# Health check para o Render
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:10000/ || exit 1
 
-# 9️⃣ Comando para rodar a aplicação
-CMD ["python", "run.py"]
+# Comando para rodar (Render usa PORT automático)
+CMD exec gunicorn --bind 0.0.0.0:$PORT run:app
