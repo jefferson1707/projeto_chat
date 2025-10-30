@@ -9,7 +9,15 @@ app = create_app()
 
 # Step 2: cria o banco de dados para o docker 
 with app.app_context():
-    db.create_all()
+    try:
+        # Verifica se o diretório instance existe
+        if not os.path.exists('instance'):
+            os.makedirs('instance')
+        db.create_all()
+        print(" Database created successfully")
+    except Exception as e:
+        print(f" Database creation warning: {e}")
+        # Continua mesmo com erro no banco
 
 # step 3: roda o app
 if __name__ == "__main__":

@@ -2,10 +2,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Instala dependências do sistema
+# Instala dependências do sistema (incluindo sqlite3)
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
+    sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copia requirements primeiro para cache
@@ -18,8 +19,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copia a aplicação
 COPY . .
 
-# Cria diretório instance
-RUN mkdir -p instance
+# Cria diretório instance com permissões
+RUN mkdir -p instance && chmod 755 instance
 
 # Porta que o Render usa
 ENV PORT=10000
