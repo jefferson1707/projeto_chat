@@ -24,3 +24,13 @@ ansible.log
 # VIRTUALENV
 
 venv/
+
+# Secrets e configurações sensíveis
+secret-template.yml
+*-secrets.yml
+*-secret.yml
+secrets/**
+
+# Configurações de ambiente específico (se não quiser versionar)
+configmap-dev.yml
+configMap-prod.yml
