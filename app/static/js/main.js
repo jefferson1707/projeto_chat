@@ -84,26 +84,39 @@ function scrollToBottom(container) {
 }
 
 /**
- * Alterna entre mostrar e ocultar senha
+ * Alterna entre mostrar e ocultar senha com feedback visual
  */
-function togglePasswordVisibility(passwordFieldId, toggleIconId) {
+function togglePasswordVisibility(passwordFieldId, toggleButtonId, toggleIconId) {
     const passwordField = document.getElementById(passwordFieldId);
+    const toggleButton = document.getElementById(toggleButtonId);
     const toggleIcon = document.getElementById(toggleIconId);
     
-    if (passwordField && toggleIcon) {
+    if (passwordField && toggleIcon && toggleButton) {
         const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordField.setAttribute('type', type);
         
-        // Alterna o ícone do olho
+        // Alterna o ícone do olho e estados visuais
         if (type === 'text') {
             toggleIcon.classList.remove('fa-eye');
             toggleIcon.classList.add('fa-eye-slash');
-            toggleIcon.parentElement.setAttribute('aria-label', 'Ocultar senha');
+            toggleButton.setAttribute('aria-label', 'Ocultar senha');
+            toggleButton.classList.add('active');
+            
+            // Feedback visual temporário
+            toggleButton.style.backgroundColor = 'var(--gray-100)';
+            setTimeout(() => {
+                toggleButton.style.backgroundColor = '';
+            }, 300);
+            
         } else {
             toggleIcon.classList.remove('fa-eye-slash');
             toggleIcon.classList.add('fa-eye');
-            toggleIcon.parentElement.setAttribute('aria-label', 'Mostrar senha');
+            toggleButton.setAttribute('aria-label', 'Mostrar senha');
+            toggleButton.classList.remove('active');
         }
+        
+        // Foca de volta no campo de senha para continuar digitando
+        passwordField.focus();
     }
 }
 
@@ -142,12 +155,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Configura botões de mostrar/ocultar senha
-    const togglePasswordButtons = document.querySelectorAll('#toggle-password');
+    const togglePasswordButtons = document.querySelectorAll('.password-toggle-btn');
     togglePasswordButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const passwordFieldId = this.closest('.input-group').querySelector('input[type="password"], input[type="text"]').id;
+            const passwordField = this.closest('.input-group').querySelector('input[type="password"], input[type="text"]');
+            const passwordFieldId = passwordField.id;
+            const toggleButtonId = this.id;
             const toggleIconId = this.querySelector('i').id;
-            togglePasswordVisibility(passwordFieldId, toggleIconId);
+            
+            togglePasswordVisibility(passwordFieldId, toggleButtonId, toggleIconId);
+        });
+        
+        // Adiciona suporte a teclado (Enter e Space)
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
         });
     });
 });

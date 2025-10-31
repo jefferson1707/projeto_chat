@@ -100,22 +100,33 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* Password Toggle Styles */
+/* Password Toggle Styles - ESTILOS MELHORADOS */
 .input-group .btn {
     border-left: 0;
     border-color: var(--gray-300);
     background-color: var(--secondary-white);
     transition: all 0.2s ease;
+    padding: 0.75rem 1rem;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .input-group .btn:hover {
     background-color: var(--gray-100);
-    border-color: var(--gray-300);
+    border-color: var(--gray-400);
+    transform: scale(1.05);
+}
+
+.input-group .btn:active {
+    transform: scale(0.95);
 }
 
 .input-group .btn:focus {
-    box-shadow: none;
-    border-color: var(--gray-300);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    border-color: var(--gray-400);
+    background-color: var(--gray-100);
 }
 
 .input-group .form-control:focus {
@@ -127,19 +138,106 @@ body {
     border-color: var(--primary-black);
 }
 
+/* Estilos específicos para o ícone do olho */
 .password-toggle-btn {
     cursor: pointer;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border: 2px solid var(--gray-300);
+    border-left: none;
 }
 
 .password-toggle-btn .fas {
-    font-size: 0.9rem;
-    color: var(--gray-600);
+    font-size: 1.2rem;
+    color: var(--gray-700);
+    transition: all 0.2s ease;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .password-toggle-btn:hover .fas {
     color: var(--primary-black);
+    transform: scale(1.2);
+}
+
+/* Estado quando a senha está visível */
+.password-toggle-btn.active .fas {
+    color: var(--primary-black);
+}
+
+/* Melhora a aparência do grupo de input */
+.input-group {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.input-group .form-control {
+    border-right: none;
+}
+
+.input-group .form-control:focus {
+    border-right: none;
+}
+
+/* Estilos para diferentes estados */
+.password-toggle-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.password-toggle-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    transition: background-color 0.2s ease;
+}
+
+.password-toggle-btn:hover::before {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Efeito de foco acessível */
+.password-toggle-btn:focus-visible {
+    outline: 2px solid var(--primary-black);
+    outline-offset: 2px;
+}
+
+/* Estados para o ícone específico */
+.password-toggle-btn .fa-eye {
+    color: var(--gray-600);
+}
+
+.password-toggle-btn .fa-eye-slash {
+    color: var(--gray-800);
+}
+
+/* Hover states específicos */
+.password-toggle-btn:hover .fa-eye {
+    color: var(--primary-black);
+    transform: scale(1.2);
+}
+
+.password-toggle-btn:hover .fa-eye-slash {
+    color: var(--primary-black);
+    transform: scale(1.2);
+}
+
+/* Adiciona uma sombra sutil no hover */
+.password-toggle-btn:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Garante que o grupo de input fique consistente */
+.input-group:has(.form-control:focus) .password-toggle-btn {
+    border-color: var(--primary-black);
+    background-color: var(--gray-50);
 }
 
 /* Alerts */
@@ -224,6 +322,15 @@ body {
     .user-message,
     .assistant-message {
         max-width: 95%;
+    }
+    
+    .password-toggle-btn .fas {
+        font-size: 1.1rem;
+    }
+    
+    .input-group .btn {
+        padding: 0.65rem 0.8rem;
+        min-width: 45px;
     }
 }
 
