@@ -100,6 +100,48 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* Password Toggle Styles */
+.input-group .btn {
+    border-left: 0;
+    border-color: var(--gray-300);
+    background-color: var(--secondary-white);
+    transition: all 0.2s ease;
+}
+
+.input-group .btn:hover {
+    background-color: var(--gray-100);
+    border-color: var(--gray-300);
+}
+
+.input-group .btn:focus {
+    box-shadow: none;
+    border-color: var(--gray-300);
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: var(--primary-black);
+}
+
+.input-group .form-control:focus + .btn {
+    border-color: var(--primary-black);
+}
+
+.password-toggle-btn {
+    cursor: pointer;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.password-toggle-btn .fas {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+.password-toggle-btn:hover .fas {
+    color: var(--primary-black);
+}
+
 /* Alerts */
 .alert {
     border-radius: 8px;

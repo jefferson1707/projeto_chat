@@ -28,7 +28,12 @@
                     
                     <div class="mb-3">
                         {{ form.senha.label(class="form-label") }}
-                        {{ form.senha(class="form-control", placeholder="Sua senha") }}
+                        <div class="input-group">
+                            {{ form.senha(class="form-control", placeholder="Sua senha", id="password-field") }}
+                            <button type="button" class="btn btn-outline-secondary" id="toggle-password">
+                                <i class="fas fa-eye" id="toggle-icon"></i>
+                            </button>
+                        </div>
                         {% if form.senha.errors %}
                             <div class="text-danger mt-1">
                                 {% for error in form.senha.errors %}

@@ -83,6 +83,30 @@ function scrollToBottom(container) {
     }
 }
 
+/**
+ * Alterna entre mostrar e ocultar senha
+ */
+function togglePasswordVisibility(passwordFieldId, toggleIconId) {
+    const passwordField = document.getElementById(passwordFieldId);
+    const toggleIcon = document.getElementById(toggleIconId);
+    
+    if (passwordField && toggleIcon) {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        
+        // Alterna o ícone do olho
+        if (type === 'text') {
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+            toggleIcon.parentElement.setAttribute('aria-label', 'Ocultar senha');
+        } else {
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+            toggleIcon.parentElement.setAttribute('aria-label', 'Mostrar senha');
+        }
+    }
+}
+
 // ===== EVENT LISTENERS =====
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -114,6 +138,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.card.clickable').forEach(card => {
         card.addEventListener('click', function() {
             window.location.href = this.getAttribute('data-href');
+        });
+    });
+    
+    // Configura botões de mostrar/ocultar senha
+    const togglePasswordButtons = document.querySelectorAll('#toggle-password');
+    togglePasswordButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const passwordFieldId = this.closest('.input-group').querySelector('input[type="password"], input[type="text"]').id;
+            const toggleIconId = this.querySelector('i').id;
+            togglePasswordVisibility(passwordFieldId, toggleIconId);
         });
     });
 });

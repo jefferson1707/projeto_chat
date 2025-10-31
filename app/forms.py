@@ -13,7 +13,8 @@ from wtforms.validators import (
     Length,
     EqualTo,
     Optional,
-    ValidationError
+    ValidationError,
+    Regexp
 )  # Validadores para os campos do formulario
 
 
@@ -34,7 +35,9 @@ class RegisterForm(FlaskForm):
         "Username", validators=[DataRequired(), Length(min=3, max=80)]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
-    senha = PasswordField("Senha", validators=[DataRequired(), Length(min=6)])
+    senha = PasswordField("Senha", validators=[DataRequired(), Length(min=6), 
+           Regexp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$',
+           message="A senha deve conter: letra maiúscula, minúscula, número e caractere especial")])
     confirmar_senha = PasswordField(
         "Confirmar Senha", validators=[DataRequired(), EqualTo("senha")]
     )

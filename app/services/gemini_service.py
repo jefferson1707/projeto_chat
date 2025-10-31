@@ -24,10 +24,10 @@ class GeminiService:
         
         # Step 1.1.3: parâmetros padrão de geração
         self.default_generation_config = {
-            "temperature": 0.7, # Explicação: quanto mais alto, mais criativo
+            "temperature": 0.5, # Explicação: quanto mais alto, mais criativo
             "top_p": 0.8, # Explicação:  se concentra nas palavras mais prováveis
             "top_k": 40, # Explicação: limita as palavras mais prováveis
-            "max_output_tokens": 2048, # Explicação: tamanho máximo da resposta
+            "max_output_tokens": 850, # Explicação: tamanho máximo da resposta
             "stop_sequences": None, # Explicação: sequência de parada
             "candidate_count": 1,  # Número de respostas alternativas
         }
