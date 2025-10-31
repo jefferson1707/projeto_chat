@@ -13,72 +13,80 @@
             <div class="card-body p-4">
                 <form method="POST">
                     {{ form.hidden_tag() }}
-                    
+
                     <div class="mb-3">
                         {{ form.username.label(class="form-label") }}
                         {{ form.username(class="form-control", placeholder="Seu nome de usuário") }}
                         {% if form.username.errors %}
-                            <div class="text-danger mt-1">
-                                {% for error in form.username.errors %}
-                                    <small>{{ error }}</small>
-                                {% endfor %}
-                            </div>
+                        <div class="text-danger mt-1">
+                            {% for error in form.username.errors %}
+                            <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
-                    
+
                     <div class="mb-3">
                         {{ form.email.label(class="form-label") }}
                         {{ form.email(class="form-control", placeholder="seu@email.com") }}
                         {% if form.email.errors %}
-                            <div class="text-danger mt-1">
-                                {% for error in form.email.errors %}
-                                    <small>{{ error }}</small>
-                                {% endfor %}
-                            </div>
+                        <div class="text-danger mt-1">
+                            {% for error in form.email.errors %}
+                            <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
-                    
+
+                    <!-- ... código anterior ... -->
                     <div class="mb-3">
                         {{ form.senha.label(class="form-label") }}
                         <div class="input-group">
-                            {{ form.senha(class="form-control", placeholder="Mínimo 6 caracteres", id="password-field") }}
-                            <button type="button" class="btn btn-outline-secondary password-toggle-btn" id="toggle-password">
-                                <span class="eye-emoji" id="toggle-icon">👁️</span>
+                            {{ form.senha(class="form-control", placeholder="Mínimo 6 caracteres", id="password-field")
+                            }}
+                            <button type="button" class="btn btn-outline-secondary password-toggle-btn"
+                                id="toggle-password"
+                                style="background-color: white; border: 2px solid #ced4da; border-left: none;">
+                                <span class="eye-emoji" id="toggle-icon" style="font-size: 1.3rem;">👁️</span>
                             </button>
                         </div>
                         {% if form.senha.errors %}
-                            <div class="text-danger mt-1">
-                                {% for error in form.senha.errors %}
-                                    <small>{{ error }}</small>
-                                {% endfor %}
-                            </div>
+                        <div class="text-danger mt-1">
+                            {% for error in form.senha.errors %}
+                            <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
-                    
+
                     <div class="mb-3">
                         {{ form.confirmar_senha.label(class="form-label") }}
                         <div class="input-group">
-                            {{ form.confirmar_senha(class="form-control", placeholder="Digite a senha novamente", id="confirm-password-field") }}
-                            <button type="button" class="btn btn-outline-secondary password-toggle-btn" id="toggle-confirm-password">
-                                <span class="eye-emoji" id="toggle-confirm-icon">👁️</span>
+                            {{ form.confirmar_senha(class="form-control", placeholder="Digite a senha novamente",
+                            id="confirm-password-field") }}
+                            <button type="button" class="btn btn-outline-secondary password-toggle-btn"
+                                id="toggle-confirm-password"
+                                style="background-color: white; border: 2px solid #ced4da; border-left: none;">
+                                <span class="eye-emoji" id="toggle-confirm-icon" style="font-size: 1.3rem;">👁️</span>
                             </button>
                         </div>
                         {% if form.confirmar_senha.errors %}
-                            <div class="text-danger mt-1">
-                                {% for error in form.confirmar_senha.errors %}
-                                    <small>{{ error }}</small>
-                                {% endfor %}
-                            </div>
+                        <div class="text-danger mt-1">
+                            {% for error in form.confirmar_senha.errors %}
+                            <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
-                    
+                    <!-- ... código posterior ... -->
+
                     <div class="d-grid">
                         {{ form.submit(class="btn btn-dark btn-lg") }}
                     </div>
                 </form>
-                
+
                 <div class="text-center mt-3">
-                    <p class="mb-0 text-muted">Já tem conta? 
+                    <p class="mb-0 text-muted">Já tem conta?
                         <a href="{{ url_for('auth.login') }}" class="text-dark">Faça login aqui</a>
                     </p>
                 </div>

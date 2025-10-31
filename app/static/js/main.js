@@ -30,7 +30,7 @@ function showToast(message, type = 'info') {
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
     document.body.appendChild(toast);
-    
+
     // Remove automaticamente após 5 segundos
     setTimeout(() => {
         if (toast.parentNode) {
@@ -47,7 +47,7 @@ function formatDate(dateString) {
     const now = new Date();
     const diffTime = Math.abs(now - date);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 1) {
         return 'Hoje ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     } else if (diffDays === 2) {
@@ -65,12 +65,12 @@ function formatDate(dateString) {
 function validateRegisterForm() {
     const password = document.querySelector('input[name="password"]');
     const confirmPassword = document.querySelector('input[name="confirm_password"]');
-    
+
     if (password && confirmPassword && password.value !== confirmPassword.value) {
         showToast('As senhas não coincidem!', 'danger');
         return false;
     }
-    
+
     return true;
 }
 
@@ -85,65 +85,49 @@ function scrollToBottom(container) {
 
 
 /**
- * Alterna entre mostrar e ocultar senha com feedback visual 
+ * Alterna entre mostrar e ocultar senha - VERSÃO SIMPLIFICADA
  */
-function togglePasswordVisibility(passwordFieldId, toggleButtonId, toggleIconId) {
-    const passwordField = document.getElementById(passwordFieldId);
-    const toggleButton = document.getElementById(toggleButtonId);
-    const toggleIcon = document.getElementById(toggleIconId);
-    
-    if (passwordField && toggleIcon && toggleButton) {
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        
-        // Alterna o emoji do olho e estados visuais
-        if (type === 'text') {
-            toggleIcon.textContent = '🙈'; // Olho fechado/monkey
-            toggleButton.setAttribute('aria-label', 'Ocultar senha');
-            toggleButton.classList.add('active');
-            
-            // Feedback visual temporário
-            toggleButton.style.backgroundColor = 'var(--gray-100)';
-            setTimeout(() => {
-                toggleButton.style.backgroundColor = '';
-            }, 300);
-            
-        } else {
-            toggleIcon.textContent = '👁️'; // Olho aberto
-            toggleButton.setAttribute('aria-label', 'Mostrar senha');
-            toggleButton.classList.remove('active');
-        }
-        
-        // Foca de volta no campo de senha para continuar digitando
+function togglePasswordVisibility(button) {
+    const inputGroup = button.closest('.input-group');
+    const passwordField = inputGroup.querySelector('input[type="password"], input[type="text"]');
+    const eyeEmoji = button.querySelector('.eye-emoji');
+
+    if (passwordField && eyeEmoji) {
+        // Alterna entre password e text
+        const isPassword = passwordField.type === 'password';
+        passwordField.type = isPassword ? 'text' : 'password';
+
+        // Alterna o emoji
+        eyeEmoji.textContent = isPassword ? '🙈' : '👁️';
+
+        // Feedback visual
+        button.classList.toggle('active', isPassword);
+
+        // Foca de volta no campo
         passwordField.focus();
     }
 }
 
-// ===== EVENT LISTENERS =====
-
-document.addEventListener('DOMContentLoaded', function() {
-    // ... (código existente mantido) ...
-    
+// Configuração dos botões
+document.addEventListener('DOMContentLoaded', function () {
     // Configura botões de mostrar/ocultar senha
-    const togglePasswordButtons = document.querySelectorAll('.password-toggle-btn');
-    togglePasswordButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const passwordField = this.closest('.input-group').querySelector('input[type="password"], input[type="text"]');
-            const passwordFieldId = passwordField.id;
-            const toggleButtonId = this.id;
-            const toggleIconId = this.querySelector('.eye-emoji').id;
-            
-            togglePasswordVisibility(passwordFieldId, toggleButtonId, toggleIconId);
-        });
-        
-        // Adiciona suporte a teclado (Enter e Space)
-        button.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
+    const toggleButtons = document.querySelectorAll('.password-toggle-btn');
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            togglePasswordVisibility(this);
         });
     });
+
+    // Outros event listeners existentes...
+    document.querySelectorAll('.timestamp').forEach(element => {
+        const dateString = element.getAttribute('data-timestamp');
+        if (dateString) {
+            element.textContent = formatDate(dateString);
+        }
+    });
+
+    // ... resto do código existente
 });
 
 // ===== FUNÇÕES PARA CHAT =====
@@ -160,7 +144,7 @@ async function sendMessage(conversationId, message) {
             },
             body: JSON.stringify({ content: message })
         });
-        
+
         return await response.json();
     } catch (error) {
         console.error('Erro ao enviar mensagem:', error);

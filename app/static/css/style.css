@@ -42,7 +42,7 @@ body {
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
 }
 
 .card-header {
@@ -101,22 +101,24 @@ body {
 }
 
 
-/* Password Toggle Styles */
+/* Password Toggle Styles - CORRIGIDO */
 .input-group .btn {
     border-left: 0;
     border-color: var(--gray-300);
-    background-color: var(--secondary-white);
+    background-color: var(--secondary-white) !important;
     transition: all 0.2s ease;
     padding: 0.75rem 1rem;
     min-width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid var(--gray-300) !important;
+    border-left: none !important;
 }
 
 .input-group .btn:hover {
-    background-color: var(--gray-100);
-    border-color: var(--gray-400);
+    background-color: var(--gray-100) !important;
+    border-color: var(--gray-400) !important;
     transform: scale(1.05);
 }
 
@@ -125,18 +127,19 @@ body {
 }
 
 .input-group .btn:focus {
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-    border-color: var(--gray-400);
-    background-color: var(--gray-100);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+    border-color: var(--gray-400) !important;
+    background-color: var(--gray-100) !important;
+    outline: none;
 }
 
 /* Estilos específicos para o emoji do olho */
 .password-toggle-btn {
     cursor: pointer;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border: 2px solid var(--gray-300);
-    border-left: none;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
 }
 
 .eye-emoji {
@@ -144,6 +147,7 @@ body {
     transition: all 0.3s ease;
     display: inline-block;
     filter: grayscale(0.3);
+    line-height: 1;
 }
 
 .password-toggle-btn:hover .eye-emoji {
@@ -159,7 +163,7 @@ body {
 
 /* Efeito de foco acessível */
 .password-toggle-btn:focus-visible {
-    outline: 2px solid var(--primary-black);
+    outline: 2px solid var(--primary-black) !important;
     outline-offset: 2px;
 }
 
@@ -170,8 +174,22 @@ body {
 
 /* Garante que o grupo de input fique consistente */
 .input-group:has(.form-control:focus) .password-toggle-btn {
+    border-color: var(--primary-black) !important;
+    background-color: var(--gray-50) !important;
+}
+
+/* Remove borda direita do campo de senha quando focado */
+.input-group .form-control:focus {
+    border-right: none;
     border-color: var(--primary-black);
-    background-color: var(--gray-50);
+    box-shadow: none;
+}
+
+/* Garante que o campo de senha tenha borda direita removida */
+.input-group .form-control {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 /* Responsive para o emoji */
@@ -179,11 +197,28 @@ body {
     .eye-emoji {
         font-size: 1.2rem;
     }
-    
+
     .input-group .btn {
         padding: 0.65rem 0.8rem;
         min-width: 45px;
     }
+}
+
+/* Corrige o z-index para garantir visibilidade */
+.password-toggle-btn {
+    position: relative;
+    z-index: 2;
+}
+
+/* Garante contraste do texto do botão */
+.btn-outline-secondary {
+    color: var(--gray-700) !important;
+    background-color: var(--secondary-white) !important;
+}
+
+.btn-outline-secondary:hover {
+    color: var(--primary-black) !important;
+    background-color: var(--gray-100) !important;
 }
 
 /* Alerts */
@@ -233,11 +268,11 @@ body {
 
 /* Shadows */
 .shadow {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
 }
 
 .shadow-sm {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Text Colors */
@@ -260,20 +295,20 @@ body {
     .display-4 {
         font-size: 2rem;
     }
-    
+
     .card-body {
         padding: 1rem;
     }
-    
+
     .user-message,
     .assistant-message {
         max-width: 95%;
     }
-    
+
     .password-toggle-btn .fas {
         font-size: 1.1rem;
     }
-    
+
     .input-group .btn {
         padding: 0.65rem 0.8rem;
         min-width: 45px;
@@ -347,8 +382,16 @@ code {
 }
 
 @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
 }
 
 .assistant-message {
