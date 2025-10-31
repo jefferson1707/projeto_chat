@@ -43,7 +43,7 @@
                         <div class="input-group">
                             {{ form.senha(class="form-control", placeholder="Mínimo 6 caracteres", id="password-field") }}
                             <button type="button" class="btn btn-outline-secondary password-toggle-btn" id="toggle-password">
-                                <i class="fas fa-eye" id="toggle-icon"></i>
+                                <span class="eye-emoji" id="toggle-icon">👁️</span>
                             </button>
                         </div>
                         {% if form.senha.errors %}
@@ -60,7 +60,7 @@
                         <div class="input-group">
                             {{ form.confirmar_senha(class="form-control", placeholder="Digite a senha novamente", id="confirm-password-field") }}
                             <button type="button" class="btn btn-outline-secondary password-toggle-btn" id="toggle-confirm-password">
-                                <i class="fas fa-eye" id="toggle-confirm-icon"></i>
+                                <span class="eye-emoji" id="toggle-confirm-icon">👁️</span>
                             </button>
                         </div>
                         {% if form.confirmar_senha.errors %}
