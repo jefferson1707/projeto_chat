@@ -402,3 +402,67 @@ code {
 .assistant-message .message-content {
     min-height: 20px;
 }
+
+/* Footer Styles */
+footer {
+    margin-top: 3rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+footer hr {
+    width: 80px;
+    margin: 0 auto 1.5rem auto;
+    border: none;
+    border-top: 2px solid var(--gray-300);
+    opacity: 0.6;
+}
+
+footer p {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Container estreito para o footer */
+.footer-container {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    footer {
+        margin-top: 2rem;
+        padding: 1.5rem 1rem;
+    }
+    
+    footer hr {
+        width: 60px;
+        margin-bottom: 1rem;
+    }
+    
+    footer p {
+        font-size: 0.85rem;
+    }
+    
+    .footer-container {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    footer {
+        padding: 1rem 0.5rem;
+    }
+    
+    .footer-container {
+        max-width: 200px;
+    }
+    
+    footer p {
+        font-size: 0.8rem;
+    }
+}
