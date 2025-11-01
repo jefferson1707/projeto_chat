@@ -59,10 +59,11 @@ projeto_chat/
 - **Flask**: esturtura monolitica
 - **SQLite**: como e para aprendizado, usei um DataBase mais leve
 - **Gemini API / IA Conversacional**
+- **HTML /CSS / JS**
 - **Docker & Docker Compose**
 - **Kubernetes (K8s)**
 - **Terraform / Ansible**
-
+- **Cloud Render**
 ---
 
 ## Instalação e Execução
@@ -200,6 +201,12 @@ app/
    git push origin feature/minha-feature
    ```
 5. Abra um Pull Request
+
+---
+
+## Fluxograna do UX
+
+![FXGM](docs/fxgm.png)
 
 ---
 
