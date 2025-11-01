@@ -204,15 +204,18 @@ app/
 
 ---
 
-## Fluxograna do UX
+## Fluxograma  UX
 
 ![FXGM](docs/fxgm.png)
 
 ---
 
-## Licença
+## Direitos Autorais
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+© 2025 Jefferson. Todos os direitos reservados.
+
+O código-fonte deste projeto é disponibilizado apenas para fins de visualização.
+A cópia, modificação, redistribuição ou uso comercial não são permitidos sem autorização prévia por escrito do autor.
 
 ---
 
