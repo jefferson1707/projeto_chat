@@ -63,38 +63,7 @@
                 </div>
             </div>
         </div>
-        
-        <div class="card mt-3 border-0 shadow">
-            <div class="card-header bg-white py-3">
-                <h5 class="mb-0">Ações Rápidas</h5>
-            </div>
-            <div class="card-body">
-                <div class="d-grid gap-2">
-                    <a href="{{ url_for('minha_conta.nova_conversa') }}" class="btn btn-outline-dark">
-                        Nova Conversa
-                    </a>
-                    <a href="{{ url_for('minha_conta.historico_conversas') }}" class="btn btn-outline-secondary">
-                        Ver Todas as Conversas
-                    </a>
-                </div>
-            </div>
-        </div>
 
-        <div class="card mt-3 border-0 shadow-sm">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">Configurações</h5>
-            </div>
-            <div class="card-body">
-                <div class="d-grid gap-2">
-                    <a href="{{ url_for('minha_conta.apagar_todas_conversas') }}" class="btn btn-outline-warning btn-sm">
-                        Apagar Todas as Conversas
-                    </a>
-                    <a href="{{ url_for('minha_conta.apagar_conta') }}" class="btn btn-outline-secondary btn-sm">
-                        Gerenciar Conta
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}

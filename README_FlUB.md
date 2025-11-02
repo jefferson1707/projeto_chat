@@ -204,9 +204,15 @@ app/
 
 ---
 
-## Fluxograma  UX
+## Fluxo Completo (Infraestrutura + Lógica de Aplicação)
 
 ![FXGM](docs/fxgm.png)
+
+---
+
+## Fluxograma UX
+
+![FLUXOGRAMA](docs/fluxograma.png)
 
 ---
 
