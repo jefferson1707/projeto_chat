@@ -466,3 +466,26 @@ footer p {
         font-size: 0.8rem;
     }
 }
+
+/* BOTÃO ENVIAR */
+.btn-dark {
+    background-color: var(--primary-black) !important;
+    border-color: var(--primary-black) !important;
+    color: var(--secondary-white) !important;
+}
+
+.btn-dark:hover {
+    background-color: var(--gray-800) !important;
+    border-color: var(--gray-800) !important;
+    color: var(--secondary-white) !important;
+    transform: translateY(-1px);
+}
+
+/* Garante que o botão no formulário de chat fique visível */
+.input-group .btn-dark {
+    background-color: var(--primary-black) !important;
+    border-color: var(--primary-black) !important;
+    color: var(--secondary-white) !important;
+    min-width: 80px;
+    font-weight: 600;
+}
