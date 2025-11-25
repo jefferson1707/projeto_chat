@@ -2,7 +2,7 @@
 
 acesse: - URL do Flub: https://projeto-chat-lvk8.onrender.com
 
-![Preview](docs/preview.png)
+![Preview](docss/preview.png)
 
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.3.x-lightgrey.svg)](https://flask.palletsprojects.com/)
@@ -206,13 +206,13 @@ app/
 
 ## Fluxo Completo (Infraestrutura + Lógica de Aplicação)
 
-![FXGM](docs/fxgm.png)
+![FXGM](docss/fxgm.png)
 
 ----
 
 ## Fluxograma UX
 
-![FLUXOGRAMA](docs/fluxograma.png)
+![FLUXOGRAMA](docss/fluxograma.png)
 
 ---
 
