@@ -202,12 +202,6 @@ app/
    ```
 5. Abra um Pull Request
 
----
-
-## Fluxo Completo (Infraestrutura + Lógica de Aplicação)
-
-![FXGM](docss/fxgm1.png)
-
 ----
 
 ## Fluxograma UX
