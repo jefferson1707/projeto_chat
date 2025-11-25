@@ -22,7 +22,7 @@ class GeminiService:
 
         # Step 1.1.2: modelo do Gemini
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        self.model = genai.GenerativeModel("gemini-2.5-flash")
         
         # Step 1.1.3: parâmetros padrão de geração
         self.default_generation_config = {
