@@ -7,7 +7,7 @@ def debug_gemini_25_flash():
     """
     Debug específico para o modelo gemini-2.5-flash
     """
-    API_KEY = "AIzaSyBdztAXhCJCp5mbpCShSOE5ok8MxdSQrLU"
+    API_KEY = "minha chave api"
     
     print("🚀 DEBUG ESPECÍFICO - GEMINI 2.5 FLASH")
     print("=" * 60)
