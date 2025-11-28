@@ -195,7 +195,7 @@ def verificar_alternativas():
     """
     print("\n" + "🔄 VERIFICANDO MODELOS ALTERNATIVOS".center(60, "="))
     
-    API_KEY = "AIzaSyBdztAXhCJCp5mbpCShSOE5ok8MxdSQrLU"
+    API_KEY = "minha chave api"
     genai.configure(api_key=API_KEY)
     
     modelos_alternativos = [
