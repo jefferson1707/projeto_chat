@@ -8,5 +8,5 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 kubectl apply -f k8s/ingress.yaml
 
-echo "✅ Deploy completed!"
-echo "🌐 Your app will be available at: https://projeto-chat.onrender.com"
+echo "Deploy completed!"
+echo "Your app will be available at: https://projeto-chat.onrender.com"

@@ -1,5 +1,5 @@
 ---
-- name: 🐍 Configurar ambiente de desenvolvimento Flask
+- name:  Configurar ambiente de desenvolvimento Flask
   hosts: localhost
   connection: local
   vars:
@@ -11,7 +11,7 @@
     - python
     - project-setup
 
-- name: ✅ Verificar instalação
+- name:  Verificar instalação
   hosts: localhost
   connection: local
   vars:  # ← ADICIONE ESTA SEÇÃO

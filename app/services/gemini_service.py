@@ -109,17 +109,17 @@ class GeminiService:
                         # Exponential backoff com jitter
                         wait_time = base_delay * (2 ** attempt) + (0.1 * attempt)
                         current_app.logger.warning(
-                            f"⚠️ Erro 429 na tentativa {attempt + 1}/{max_retries}. "
+                            f" Erro 429 na tentativa {attempt + 1}/{max_retries}. "
                             f"Aguardando {wait_time:.1f}s..."
                         )
                         time.sleep(wait_time)
                         continue
                     else:
-                        current_app.logger.error(f"❌ Falha após {max_retries} tentativas: {error_str}")
+                        current_app.logger.error(f" Falha após {max_retries} tentativas: {error_str}")
                         raise Exception(f"Erro 429: Limite de requisições excedido após {max_retries} tentativas")
                 else:
                     # Para outros erros, não faz retry
-                    current_app.logger.error(f"❌ Erro não recuperável: {error_str}")
+                    current_app.logger.error(f" Erro não recuperável: {error_str}")
                     raise e
         
         raise Exception("Falha inesperada no retry mechanism")
@@ -307,7 +307,7 @@ class GeminiService:
             raise ValueError("requests_per_minute deve ser maior que 0")
         
         self._min_request_interval = 60.0 / requests_per_minute
-        current_app.logger.info(f"✅ Rate limiting ajustado para {requests_per_minute} req/min")
+        current_app.logger.info(f" Rate limiting ajustado para {requests_per_minute} req/min")
         
         return {
             "requests_per_minute": requests_per_minute,
@@ -319,7 +319,7 @@ class GeminiService:
         """Reseta os contadores de erro consecutivos"""
         self._consecutive_errors = 0
         self._min_request_interval = 2.0  # Volta ao valor padrão
-        current_app.logger.info("✅ Contadores de erro resetados")
+        current_app.logger.info(" Contadores de erro resetados")
         return True
 
     # Step 1.6: método para configurações de segurança personalizadas

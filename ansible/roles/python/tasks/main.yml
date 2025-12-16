@@ -1,25 +1,25 @@
 ---
-- name: 🏗️ Criar ambiente virtual
+- name: Criar ambiente virtual
   command:
     cmd: "python3 -m venv {{ venv_path }}"
     creates: "{{ venv_path }}/bin/activate"
 
-- name: 📦 Atualizar pip no virtualenv
+- name:  Atualizar pip no virtualenv
   command:
     cmd: "{{ venv_path }}/bin/pip install --upgrade pip"
 
-- name: 📋 Instalar dependências Python
+- name:  Instalar dependências Python
   command:
     cmd: "{{ venv_path }}/bin/pip install -r {{ project_path }}/requirements.txt"
 
-- name: 🔧 Verificar se Flask foi instalado
+- name:  Verificar se Flask foi instalado
   command:
     cmd: "{{ venv_path }}/bin/flask --version"
   register: flask_check
   changed_when: false
   ignore_errors: yes
 
-- name: 🔧 Instalar Flask CLI se necessário
+- name:  Instalar Flask CLI se necessário
   command:
     cmd: "{{ venv_path }}/bin/pip install flask"
   when: flask_check.rc != 0

@@ -11,51 +11,51 @@ def test_app_creation():
         app = create_app()
         with app.app_context():
             db.create_all()  # Cria tabelas se não existirem
-        print("✅ Aplicação criada com sucesso!")
+        print(" Aplicação criada com sucesso!")
         return True
     except Exception as e:
-        print(f"❌ Erro ao criar aplicação: {e}")
+        print(f" Erro ao criar aplicação: {e}")
         return False
 
 def test_database_connection():
     """Testa conexão com o banco de dados"""
-    print("🔧 Testando conexão com banco...")
+    print(" Testando conexão com banco...")
     try:
         app = create_app()
         with app.app_context():
             # Tenta uma query simples
             from app.models import User
             users = User.query.limit(1).all()
-        print("✅ Conexão com banco funcionando!")
+        print(" Conexão com banco funcionando!")
         return True
     except Exception as e:
-        print(f"❌ Erro no banco: {e}")
+        print(f"Erro no banco: {e}")
         return False
 
 def test_routes():
     """Testa se as rotas básicas funcionam"""
-    print("🔧 Testando rotas...")
+    print(" Testando rotas...")
     try:
         app = create_app()
         with app.test_client() as client:
             # Testa rota home
             response = client.get('/')
             assert response.status_code in [200, 302]  # 200 OK ou 302 Redirect
-            print("✅ Rota / funcionando!")
+            print(" Rota / funcionando!")
             
             # Testa rota login
             response = client.get('/auth/login')
             assert response.status_code == 200
-            print("✅ Rota /auth/login funcionando!")
+            print("Rota /auth/login funcionando!")
             
     except Exception as e:
-        print(f"❌ Erro nas rotas: {e}")
+        print(f" Erro nas rotas: {e}")
         return False
     
     return True
 
 if __name__ == '__main__':
-    print("🚀 Iniciando testes da aplicação...")
+    print(" Iniciando testes da aplicação...")
     print("=" * 50)
     
     tests = [
@@ -71,9 +71,9 @@ if __name__ == '__main__':
         print()
     
     print("=" * 50)
-    print(f"📊 Resultado: {passed}/{len(tests)} testes passaram")
+    print(f" Resultado: {passed}/{len(tests)} testes passaram")
     
     if passed == len(tests):
-        print("🎉 Todos os testes passaram! Aplicação pronta.")
+        print(" Todos os testes passaram! Aplicação pronta.")
     else:
-        print("⚠️  Alguns testes falharam. Verifique os erros acima.")
+        print(" Alguns testes falharam. Verifique os erros acima.")

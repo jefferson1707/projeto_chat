@@ -13,5 +13,5 @@ kubectl apply -f k8s/secret-dev.yaml
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 
-echo "✅ Local deploy completed!"
-echo "🌐 Access your app: kubectl port-forward svc/projeto-chat-service 8080:80"
+echo "Local deploy completed!"
+echo "Access your app: kubectl port-forward svc/projeto-chat-service 8080:80"

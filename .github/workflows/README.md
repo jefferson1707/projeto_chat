@@ -7,7 +7,7 @@ graph TD
     C -->|Sim| D[CD: Build Docker]
     C -->|Não| E[Falha - Notificação]
     D --> F[Push para Docker Hub]
-    F --> G[✅ Deploy Pronto]
+    F --> G[Deploy Pronto]
 
 
  # Para debug local do Dockerfile:
