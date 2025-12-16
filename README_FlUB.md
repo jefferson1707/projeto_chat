@@ -1,8 +1,10 @@
 # Flub
 
-# Serviço suspenso no momento, rode no modo desenvolvedor para conhecer. 
+# Serviço suspenso no momento 
 acesse: - URL do Flub: https://projeto-chat-lvk8.onrender.com (suspenso)
-acesse via terminal : python run.py
+
+# Rode no modo desenvolvedor para conhecer. 
+acesse: - via terminal : python run.py
 
 ![Preview](docss/preview1.png)
 

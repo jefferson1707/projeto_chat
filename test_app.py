@@ -6,7 +6,7 @@ from app import create_app, db
 
 def test_app_creation():
     """Testa se a aplicação Flask cria corretamente"""
-    print("🔧 Testando criação da aplicação...")
+    print(" Testando criação da aplicação...")
     try:
         app = create_app()
         with app.app_context():

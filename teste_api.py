@@ -154,7 +154,7 @@ def debug_gemini_25_flash():
             print(f" Erro no teste de performance: {e}")
         
         # 8. Teste com contexto
-        print("\n8️ TESTANDO CHAT COM CONTEXTO...")
+        print("\n8 TESTANDO CHAT COM CONTEXTO...")
         try:
             chat = model.start_chat(history=[])
             
@@ -166,7 +166,7 @@ def debug_gemini_25_flash():
             response2 = chat.send_message("Qual é o meu nome?")
             print(f"    Resposta 2: {response2.text}")
             
-            print("✅ Chat com contexto funcionando!")
+            print(" Chat com contexto funcionando!")
             
         except Exception as e:
             print(f" Erro no chat com contexto: {e}")
